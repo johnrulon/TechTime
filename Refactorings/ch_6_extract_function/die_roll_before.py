@@ -26,5 +26,5 @@ class DieRoll:
 Design type: Refactoring
 Design Pattern: Extract function
 
-Notes: Repeated code is the hint to extract function
+Notes: Repeated code is the hint to extract a function
 """
