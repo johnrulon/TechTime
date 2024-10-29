@@ -1,7 +1,7 @@
 import random
 
 
-class DieRollAfter:
+class DieRoll:
 
     @classmethod
     def roll_a_sided_die(self, num_sides_of_die):
