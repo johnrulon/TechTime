@@ -70,6 +70,8 @@ For comparing words in order and reverse order, the hint is also repeated code
 For line 16: using VS Code's 'Extract method' refactoring option,
 we replaced this comment with a method
 and now have a self describing method name
+For line 16: we could also 'Slide variable' up to be a class variable so the 
+function doesn't have to return 2 items
 
 For line 22: we could instead just simply 'extract variable' instead
 of extracting a method
