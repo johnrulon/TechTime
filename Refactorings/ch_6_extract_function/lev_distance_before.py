@@ -27,16 +27,15 @@ class Before:
             len_diff = 0
             max_len = word1_len
 
-        # compare the letters in each word in order
+        # compare the words in order and store the distance
         for i in range(max_len - len_diff):
             if word1[i] != word2[i]:
                 distance += 1
 
-        # store the distance
         distances.append(distance)
         distance = 0
 
-        # compare the letters in each word in reverse order
+        # compare the words in reverse order and store the difference
         for i in range(max_len - len_diff):
             if word1[-(i+1)] != word2[-(i+1)]:
                 distance += 1
@@ -53,6 +52,4 @@ Design type: Refactoring
 Design Pattern: Extract function -> Replace comment with function
 
 Notes: A comment is the hint to extract function
-
-For comparing words in order and reverse order, the hint is repeated code
 """

@@ -13,7 +13,7 @@ class Before:
 
         self.distances = []
 
-        len_diff, max_len = self.get_diff_and_max_len(word1_len, word2_len)
+        len_diff, max_len = self.set_diff_and_max_len(word1_len, word2_len)
 
         self.add_distance_of_words_in_order(word1, word2, len_diff, max_len)
 
@@ -46,7 +46,7 @@ class Before:
         self.distances.append(distance)
 
     @classmethod
-    def get_diff_and_max_len(self, first_word_length, second_word_length):
+    def set_diff_and_max_len(self, first_word_length, second_word_length):
         if first_word_length > second_word_length:
             length_diff = first_word_length - second_word_length
             max_length = first_word_length

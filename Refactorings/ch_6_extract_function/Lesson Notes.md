@@ -3,7 +3,7 @@
 - Replace comment with function
 - Replace repeated code with function
 - VS Code's "Refactor" tools
-- Name functions based on _what_ they do, based on its purpose
+- Name functions based on _what_ they do, not _how_
 
 ### Pull up field
 - Moving a field "up" from a sub-class to a parent class or a method to a class
