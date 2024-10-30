@@ -36,11 +36,29 @@ With Levenshtein Distance, we again use 'Extract function' to start things out.
 - Suggest that we use the comment as input to the name of the new method
     - So for this example, something like `get_max_and_diff_len`
 - Explain that perhaps this isn't the best outcome - to have two return values from a method
-- Undo that Refactor
+- Undo the Refactor
 - Rename (F2) `len_diff` to be `self.len_diff` (line 14 -> `self.len_diff = 0`)
 - Do the same with `max_diff` (line 17 -> `self.max_len = 0`)
 - Now Redo that same Refactor and see that it doesn't return anything, but rather sets the value to those newly added class variables
     - Mention that perhaps we could instead now add a constructor that initializes those two fields to 0
     - Main takeway though is that sometimes a tiny refactor can help VS Code to create better auto refactorings
-- 
+- Refactor next section of code (the first `for i range...` through the first `distance = 0`)
+- Talk through how maybe this refactor isn't the best result, but still does make it self-documenting
+    - The return value for `distance` on line 31 is not really needed and actually confusing because it's always going to be 0 like we want, but that feels really odd
+    - Also, it passes in a lot variables as pass by reference and modifies them, and that can be ok, but let's try another way 
+- Undo the Refactor
+- Refactor the same section, but leaving off the line of `distance = 0`
+    - Notice we at least no longer have the weird return value, and logic is clearer in the main method that we want distance to be reset to 0 following that method call
+    - However, let's go back and try another refactor 
+- Undo the Refactor
+- Before we try that Refactor again, let's consider some other refactorings we can do first to potentially end up with a better auto extracted method
+- Rename `distances` to `self.distances` 
+    - Note that this is another example of "Pull up variable" to the scope of the class instead of method scope
+- Refactor that same section again, leaving off the line of `distance = 0`
+- Let's apply that same refactor to the reverse order for loop code
+    - We now realize we can maybe do one other refactor because we're realizing that `distance` is not something that needs to live outside of that method
+- Let's do a "Slide statement" refactor where we "slide" distance to be closer to the code that needs it (in this case, moving it inside the for loop)
+- Comment out Line 16 (comment out `distance = 0`)
+- Now "slide" what is now line 32 (`distance = 0`) down to the new method, right before the for loop
+
 
