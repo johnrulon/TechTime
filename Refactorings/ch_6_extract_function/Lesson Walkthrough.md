@@ -102,4 +102,9 @@ One could argue however, there are other improvements that could be made:
 
  Either way, the process led us to at least slightly better 'self-documenting' code and was a good excercise nonetheless...hopefully at least :) 
 
+ # Challenge
+In code bases you work with frequently, find an example where the code could benefit from the `Extract function` refactoring.
+
+Look for hints of either comments that can be replaced by a self-documenting method OR repeated code to extract into a shared, reusable function.
+
 
