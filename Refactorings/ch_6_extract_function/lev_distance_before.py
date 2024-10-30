@@ -41,7 +41,6 @@ class Before:
             if word1[-(i+1)] != word2[-(i+1)]:
                 distance += 1
 
-        # store the distance
         distances.append(distance)
 
         # return the calculated distance
