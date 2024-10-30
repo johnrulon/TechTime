@@ -12,9 +12,10 @@ class Before:
         word2_len = len(word2)
 
         len_diff = 0
+        max_len = 0
+
         distances = []
         distance = 0
-        max_len = 0
 
         # compare lengths of each word to get the length_diff and max_length
         if word1_len > word2_len:
