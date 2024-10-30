@@ -67,22 +67,39 @@ With Levenshtein Distance, we again use 'Extract function' to start things out.
         - So for this example, something like `set_len_diff_and_max_len`
     - Explain that perhaps this isn't the best outcome - to have two return values from a method
 - Refactor next section of code (the first `for i range...` through the first `distance = 0`)
+    - Call the method: `add_distance_of_words_in_order`
     - Talk through how maybe this refactor isn't the best result, but still does make it self-documenting
         - The return value for `distance` on line 31 is not really needed and actually confusing because it's always going to be 0 like we want, but that feels really odd
         - Also, it passes in a lot variables as pass by reference and modifies them, and that can be ok, but let's try another way 
 - Undo the Refactor
 - Refactor the same section, but leaving off the line of `distance = 0`
     - Notice we at least no longer have the weird return value, and logic is clearer in the main method that we want distance to be reset to 0 following that method call
-    - However, let's go back and try another refactor 
+    - However, let's go back and try another refactor
 - Undo the Refactor
-- Before we try that Refactor again, let's consider some other refactorings we can do first to potentially end up with a better auto extracted method
-- Rename `distances` to `self.distances` 
-    - Note that this is another example of "Pull up variable" to the scope of the class instead of method scope
+    -  Before we try that Refactor again, let's consider some other refactorings we can do first to potentially end up with a better auto extracted method
+    - Rename `distances` to `self.distances` 
+        - Note that this is another example of "Pull up variable" to the scope of the class instead of method scope
 - Refactor that same section again, leaving off the line of `distance = 0`
 - Let's apply that same refactor to the reverse order for loop code
-    - We now realize we can maybe do one other refactor because we're realizing that `distance` is not something that needs to live outside of that method
-- Let's do a "Slide statement" refactor where we "slide" distance to be closer to the code that needs it (in this case, moving it inside the for loop)
-- Comment out Line 16 (comment out `distance = 0`)
-- Now "slide" what is now line 32 (`distance = 0`) down to the new method, right before the for loop
+    - Call the method: `add_distance_of_reverse_order`
+    - We now realize we can maybe do one other refactor because `distance` is not used in the scope of our main method
+- Let's do a "Slide statement" refactor 
+    -  Perform a "slide" to make `distance` to be closer to the code that needs it (in this case, moving it inside the for loop)
+    - Comment out Line 16 (comment out `distance = 0`)
+    - Now "slide" `distance = 0` down to into each of the new methods, right before the for loops
+
+#### Concluding thoughts
+Going through that set of refactorings we see that our code is a bit more self-documenting.
+
+One could argue however, there are other improvements that could be made:
+- For example: in reading the code now, I don't know for certain "to what" our `add_distance...` methods are adding to
+    - It's not obvious it's adding to our distances array
+    - That refactor would include:
+        - Changes `add_distance...` methods to return distance instead of adding it to an array
+        - Move the `distances.append()` code back to the main method
+        - Rename the methods to `calc` instead of `add` to indicate they are only calculating the distance, not storing/adding it
+
+
+ Either way, the process led us to at least slightly better 'self-documenting' code and was a good excercise nonetheless...hopefully at least :) 
 
 
