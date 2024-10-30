@@ -5,9 +5,12 @@
 - VS Code's "Refactor" tools
 - Name functions based on _what_ they do, based on its purpose
 
+### Pull up field
+- Moving a field "up" from a sub-class to a parent class or a method to a class
+
 ### Replace inline code with function code
 
-### Slide Variable
+### Slide Statements
 
 ### Split Variable
 
