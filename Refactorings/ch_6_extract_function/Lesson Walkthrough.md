@@ -56,7 +56,10 @@ With Levenshtein Distance, we again use 'Extract function' to start things out.
 
 #### Steps:
 - Open the file `lev_distance_before` and briefly walk them through the code
+    - Remove all the in-line comments so you can quickly add them back
     - Ask, "Is this code self-documenting code?"
+        - No - not self documenting
+        - Add back the in-line comments you removed and ask again, is this self-documenting code?
         - Answer: no, because it requires comments to make the code quickly readable (I know that can be subjective)
             - And sure, some of you could argure it's simple enough to "easily" read, but self-documenting code is code that doesn't require you to interpret the _LOGIC_ of the code, and is simple enough for most developers to follow
     - Explain that `comments` are the hint or the pattern we can see that informs us that we may want to extract a function, to extract the code into a function that is named in a way to replace the comment
