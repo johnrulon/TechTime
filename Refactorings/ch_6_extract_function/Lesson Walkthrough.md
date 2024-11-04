@@ -7,11 +7,6 @@
 - VS Code's "Refactor" tools
 - Name functions based on _what_ they do, not _how_
 
-### Pull up field
-- Moving a field "up" from a sub-class to a parent class or a method to a class
-
-### Replace inline code with function code
-
 ### Slide Statements
 
 ### Split Variable
@@ -20,6 +15,9 @@
 - If there's not a lot of logic to abstract into a method, consider introducing a variable
 ### Rename Variable
 - Rename variable to better describe what the variable contains
+
+### Pull up field
+- Moving a field "up" from a sub-class to a parent class or a method to a class
 
 ## Key takeaways
 We spend the majority of our time reading code versus writing code. Therefore, prefer readability over condensed or "cool" code. 
@@ -45,11 +43,18 @@ With Die Roll, we introduce a simple 'Extract function' refactoring.
 - Explain that `Repeated code` is the hint to extract a function
 - The repeated code being the calls to `random.randint()`
 - Explain that we want to Extract a function that will generate a random number given a range
-- Show the `die_roll_after` code and walk through the refactor that was done
-- Ask, "What other benefits do we gain from extracting this function?"
+    - Code: `@classmethod
+            def get_random_number_from_range(min_number, max_number) -> int:
+                return random.randint(min_number, max_number)`
+    - New Code in main method: `rolled_number = self.get_random_number_from_range(1, num_sides_of_die)
+        print(f'Number rolled was: {rolled_number}')`
+- Show the `die_roll_after` code side by side with old so everyone can see the refactor
+- Ask, "What benefits do we gain from extracting this function?"
     - Answer: this code can now roll any number sided die
     - In the previous code we limited ourselves to 3 numbers because of our "switch" statement for 6, 8, or 12 sided die
-    - This could actually be good OR bad - maybe we don't want to allow rolling oddly shaped dies
+    - This could actually be good OR bad
+        - Given business rules, maybe we don't want to allow rolling oddly shaped dies - maybe only allowing even sided die was a concious decision and we just broke the business rules
+- Closed die_roll files
 
 ## Levenshtein Distance Example
 With Levenshtein Distance, we again use 'Extract function' to start things out.
@@ -64,26 +69,26 @@ With Levenshtein Distance, we again use 'Extract function' to start things out.
     - Right click -> Refactor: shortcut is dependent upon whether you're using MacOS or Windows, but clicking Refactor gives us a hint to "Extract method"
     - Click "Extract Method"
     - Suggest that we use the comment as input to the name of the new method
-        - So for this example, something like `set_len_diff_and_max_len`
+        - So for this example, something like `get_len_diff_and_max_len`
     - Explain that perhaps this isn't the best outcome - to have two return values from a method
 - Refactor next section of code (the first `for i range...` through the first `distance = 0`)
     - Call the method: `add_distance_of_words_in_order`
-    - Talk through how maybe this refactor isn't the best result, but still does make it self-documenting
-        - The return statement `return distance` on line 44 is not really needed and actually confusing because it's always going to be 0 like we want, but that feels really odd
-        - Also, it passes in a lot variables as pass by reference and modifies them, and that can be ok, but let's try another way 
+    - Talk through how maybe this refactor isn't the best result
+        - We instantiate `distance` to zero on Line 18, pass it into this method, use it in our for loop, and then reset it back to 0 just so we can return a 0 for the next for loop to use
+        - Poor outcome, so let's undo that refactor and look for other refactors we can do prior to make this extract function have a better result 
 - Undo the Refactor
-- Let's think through what Refactorings we can do prior to our goal refactoring of Extract Function
-    - Introduce Slide Statement and Split Variable
+- As we look at the code we want to extract, we notice that distance is used by each for loop in a way that it is "local" to those for loops, but our code is not written in that way
+    - That hint could lead us to other Refactorings called: Slide Statement and Split Variable
         - They're exactly what they sound like: "slide" a statement up or down in code, and "split" a variable in two
-        - Looking at the code we're trying to refactor, we know that `distance` is set to 0, used in the for loops to increment, stored following the for loops, and then reset back to zero. 
-        - This indicates that `distance` can "slide" closer to the code needing it
-        - Let's perform a "slide" of distance to our for loop we're trying to extract (line 24)
-        - Recognize that we also could benefit from a "split" or else `distance` will "live" outside of the scope that we really need it to live
-        - So let's split `distance` variable into two, creating a new one called `temp_distance = 0`
+        - So, looking at the code we're trying to refactor, let's introduce a more "local" variable to our for loop
+        - Let's "slide" `distance` to the top of our for loop we're trying to extract (line 24)
+        - Recognize that we also would need to "split" `distance` or else it will "live" outside of the scope that we really need it to live (which is just the scope of this single for loop)
+        - So let's split `distance` variable into two, creating a new one called `temp_distance`
             - We'll then update `distance += 1` to use `temp_distance` instead, and also update the append statement to use `temp_distance`
             - We can also remove that reset of `distance = 0` following the append statement
-    - By doing a couple smaller Refactorings first, we made it easier to peform the overall Refactoring that we wanted to peform of "Extract function"
-    - We also enabled the next Refactor - the next for loop
+    - By doing a couple smaller Refactorings first, we made it easier to now perform the overall Refactoring that we wanted to Extract function"
+        - Perform the "Extract function" 
+    - Note: we have now set up the next Refactor - the next for loop
 - Refactor the last commented section
     - "Slide" `distance` closer to the code where it's needed
     - Rename `distance` to `temp_distance`
@@ -94,9 +99,10 @@ With Levenshtein Distance, we again use 'Extract function' to start things out.
     - Notice that perhaps the return might not be considered as self-documenting! 
         - Refactor that return statement by selecting `len_diff + min(distances)`
         - Notice the "Extract Variable" option: perform that action
-        - With that change, I'd argue that the logic to calculate the distance is now abstracted away and by performing this "Extract vairable" refactoring, that code is now self-documenting
+            - Name the variable something descriptive like `calculated_distance_between_words`
+        - With that change, I'd argue that the logic to calculate the distance is now abstracted away and, by performing this "Extract variable" refactoring, the code is now self-documenting
 
-#### Concluding thoughts
+### Concluding thoughts
 Going through that set of refactorings we see that our code is a bit more self-documenting.
 
 One could argue however, there are other improvements that could be made:
@@ -105,11 +111,13 @@ One could argue however, there are other improvements that could be made:
     - That refactor would include:
         - Changes `add_distance...` methods to return distance instead of adding it to an array
         - Move the `distances.append()` code back to the main method
-        - Rename the methods to `calc` instead of `add` to indicate they are only calculating the distance, not storing/adding it
+        - Rename the methods to `calc` or `get` instead of `add` to indicate they are only calculating the distance, not storing/adding it
     - See `lev_distance_after_2.py` for this additional refactor
+- We could also perform a "Pull up variable" Refactoring to make `distances` array, `word1`, `word2`, `len_diff`, and `max_len`  class members
+    - If that's what I wanted or needed from my code, great
 
 
- Either way, the process led us to at least slightly better 'self-documenting' code and was a good excercise nonetheless...hopefully at least :) 
+ Either way, these extra potential refactorings or not, the process led us to at least slightly better 'self-documenting' code and was a good excercise nonetheless...hopefully at least :) 
 
  # Challenge
 In code bases you work with frequently, find an example where the code could benefit from the `Extract function` refactoring.

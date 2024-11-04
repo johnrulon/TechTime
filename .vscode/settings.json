@@ -1,5 +1,6 @@
 {
     "yaml.customTags": [
         "!script"
-    ]
+    ],
+    "flake8.args": ["--max-line-length", "100"]
 }

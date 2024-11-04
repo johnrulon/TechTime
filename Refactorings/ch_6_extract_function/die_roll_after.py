@@ -20,5 +20,5 @@ class DieRoll:
 Design type: Refactoring
 Design Pattern: Extract function
 
-Notes: What other benefits do we gain from extracting this function?
+Notes: What benefits do we gain from extracting this function?
 """
