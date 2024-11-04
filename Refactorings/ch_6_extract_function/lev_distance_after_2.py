@@ -18,30 +18,32 @@ class Before:
 
         len_diff, max_len = self.set_len_diff_and_max_len(word1_len, word2_len)
 
-        self.add_distance_of_words_in_order(word1, word2, len_diff, max_len, distances)
+        dist = self.distance_of_words_in_order(word1, word2, len_diff, max_len)
+        distances.append(dist)
 
-        self.add_distance_of_reverse_order(word1, word2, len_diff, max_len, distances)
+        dist = self.distance_of_reverse_order(word1, word2, len_diff, max_len)
+        distances.append(dist)
 
         calculated_distance_between_words = len_diff + min(distances)
         return calculated_distance_between_words
 
     @classmethod
-    def add_distance_of_reverse_order(self, word1, word2, len_diff, max_len, distances):
+    def distance_of_reverse_order(self, word1, word2, len_diff, max_len):
         temp_distance = 0
         for i in range(max_len - len_diff):
             if word1[-(i+1)] != word2[-(i+1)]:
                 temp_distance += 1
 
-        distances.append(temp_distance)
+        return temp_distance
 
     @classmethod
-    def add_distance_of_words_in_order(self, word1, word2, len_diff, max_len, distances):
+    def distance_of_words_in_order(self, word1, word2, len_diff, max_len):
         temp_distance = 0
         for i in range(max_len - len_diff):
             if word1[i] != word2[i]:
                 temp_distance += 1
 
-        distances.append(temp_distance)
+        return temp_distance
 
     @classmethod
     def set_len_diff_and_max_len(self, word1_len, word2_len):

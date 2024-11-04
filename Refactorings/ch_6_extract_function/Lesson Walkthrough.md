@@ -60,7 +60,7 @@ With Levenshtein Distance, we again use 'Extract function' to start things out.
         - Answer: no, because it requires comments to make the code quickly readable (I know that can be subjective)
             - And sure, some of you could argure it's simple enough to "easily" read, but self-documenting code is code that doesn't require you to interpret the _LOGIC_ of the code, and is simple enough for most developers to follow
     - Explain that `comments` are the hint or the pattern we can see that informs us that we may want to extract a function, to extract the code into a function that is named in a way to replace the comment
-- Select all the code from line 20 - 28 (the code under that first in-line comment)
+- Select all the code from line 21 - 29 (the code under that first in-line comment)
     - Right click -> Refactor: shortcut is dependent upon whether you're using MacOS or Windows, but clicking Refactor gives us a hint to "Extract method"
     - Click "Extract Method"
     - Suggest that we use the comment as input to the name of the new method
@@ -69,24 +69,32 @@ With Levenshtein Distance, we again use 'Extract function' to start things out.
 - Refactor next section of code (the first `for i range...` through the first `distance = 0`)
     - Call the method: `add_distance_of_words_in_order`
     - Talk through how maybe this refactor isn't the best result, but still does make it self-documenting
-        - The return value for `distance` on line 31 is not really needed and actually confusing because it's always going to be 0 like we want, but that feels really odd
+        - The return statement `return distance` on line 44 is not really needed and actually confusing because it's always going to be 0 like we want, but that feels really odd
         - Also, it passes in a lot variables as pass by reference and modifies them, and that can be ok, but let's try another way 
 - Undo the Refactor
-- Refactor the same section, but leaving off the line of `distance = 0`
-    - Notice we at least no longer have the weird return value, and logic is clearer in the main method that we want distance to be reset to 0 following that method call
-    - However, let's go back and try another refactor
-- Undo the Refactor
-    -  Before we try that Refactor again, let's consider some other refactorings we can do first to potentially end up with a better auto extracted method
-    - Rename `distances` to `self.distances` 
-        - Note that this is another example of "Pull up variable" to the scope of the class instead of method scope
-- Refactor that same section again, leaving off the line of `distance = 0`
-- Let's apply that same refactor to the reverse order for loop code
-    - Call the method: `add_distance_of_reverse_order`
-    - We now realize we can maybe do one other refactor because `distance` is not used in the scope of our main method
-- Let's do a "Slide statement" refactor 
-    -  Perform a "slide" to make `distance` to be closer to the code that needs it (in this case, moving it inside the for loop)
-    - Comment out Line 16 (comment out `distance = 0`)
-    - Now "slide" `distance = 0` down to into each of the new methods, right before the for loops
+- Let's think through what Refactorings we can do prior to our goal refactoring of Extract Function
+    - Introduce Slide Statement and Split Variable
+        - They're exactly what they sound like: "slide" a statement up or down in code, and "split" a variable in two
+        - Looking at the code we're trying to refactor, we know that `distance` is set to 0, used in the for loops to increment, stored following the for loops, and then reset back to zero. 
+        - This indicates that `distance` can "slide" closer to the code needing it
+        - Let's perform a "slide" of distance to our for loop we're trying to extract (line 24)
+        - Recognize that we also could benefit from a "split" or else `distance` will "live" outside of the scope that we really need it to live
+        - So let's split `distance` variable into two, creating a new one called `temp_distance = 0`
+            - We'll then update `distance += 1` to use `temp_distance` instead, and also update the append statement to use `temp_distance`
+            - We can also remove that reset of `distance = 0` following the append statement
+    - By doing a couple smaller Refactorings first, we made it easier to peform the overall Refactoring that we wanted to peform of "Extract function"
+    - We also enabled the next Refactor - the next for loop
+- Refactor the last commented section
+    - "Slide" `distance` closer to the code where it's needed
+    - Rename `distance` to `temp_distance`
+    - Refactor: call the method: `add_distance_of_reverse_order`
+- Now review the overall code in the main method
+    - Remember, the pattern we noticed of comments, and our goal to "Replace comment with function"
+    - Let's remove the comments and see how it reads
+    - Notice that perhaps the return might not be considered as self-documenting! 
+        - Refactor that return statement by selecting `len_diff + min(distances)`
+        - Notice the "Extract Variable" option: perform that action
+        - With that change, I'd argue that the logic to calculate the distance is now abstracted away and by performing this "Extract vairable" refactoring, that code is now self-documenting
 
 #### Concluding thoughts
 Going through that set of refactorings we see that our code is a bit more self-documenting.
@@ -98,6 +106,7 @@ One could argue however, there are other improvements that could be made:
         - Changes `add_distance...` methods to return distance instead of adding it to an array
         - Move the `distances.append()` code back to the main method
         - Rename the methods to `calc` instead of `add` to indicate they are only calculating the distance, not storing/adding it
+    - See `lev_distance_after_2.py` for this additional refactor
 
 
  Either way, the process led us to at least slightly better 'self-documenting' code and was a good excercise nonetheless...hopefully at least :) 
