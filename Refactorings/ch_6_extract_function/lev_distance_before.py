@@ -1,7 +1,7 @@
 class Before:
 
     @classmethod
-    def levenshtein_distance(self, word1, word2):
+    def levenshtein_distance(cls, word1, word2):
         """
         Determine the Levenshtein Distance between two words
         """

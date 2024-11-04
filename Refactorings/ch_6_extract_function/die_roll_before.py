@@ -4,7 +4,7 @@ import random
 class DieRoll:
 
     @classmethod
-    def roll_a_sided_die(self, num_sides_of_die):
+    def roll_a_sided_die(cls, num_sides_of_die):
         """
         Roll a 6, 8, or 12 sided die
         """
