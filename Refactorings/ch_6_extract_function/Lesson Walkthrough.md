@@ -22,9 +22,9 @@
 ## Key takeaways
 We spend the majority of our time reading code versus writing code. Therefore, prefer readability over condensed or "cool" code. 
 
-Self-documenting code, that abstracts complexity into functions that have a single and focused reponsibility, will help with readability.
+Self-documenting code, that abstracts complexity into functions that have a single and focused responsibility, will help with readability.
 
-From Martin Fowler's Refactorings book:
+From Martin Fowler's Refactoring book:
 >If you have to spend effort looking at a fragment of code and figuring out _what_ it's doing, then you should extract it into a function and name the function after the _what_. ... Name it by _what_ it does, not by _how_ it does it.
 
 > Small functions only work if the names are good, so you need to pay good attention to naming. This takes practice—but once you get good at it, this approach can make code remarkably self-documenting.
