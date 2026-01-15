@@ -2,8 +2,8 @@ from srp_2 import User, UserValidator, PasswordHasher, UserRepository, WelcomeNo
 
 class UserRegistration:
     """
-    Orchestrates the workflow only.
-    Still a single responsibility: 'register a user' use-case.
+    This class composes the various single-responsibility classes to perform the 'register a user' use-case.
+    Each component has one reason to change, so this class only changes if the overall registration process changes.
     """
     def __init__(self, validator: UserValidator, hasher: PasswordHasher,
                  repo: UserRepository, notifier: WelcomeNotifier):

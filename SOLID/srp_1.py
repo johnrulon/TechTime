@@ -11,12 +11,12 @@ class User:
 
 class UserService:
     """
-    Violates SRP because it:
-      - validates input
-      - hashes passwords
-      - persists to the database
-      - sends a welcome email
-    Multiple reasons to change => not SRP.
+    Violates SRP because it has multiple reasons to change:
+    This class  
+    -   validates user input
+    -   hashes user passwords
+    -   persists users to the database
+    -   & sends a welcome email
     """
 
     def __init__(self, db, email_client):

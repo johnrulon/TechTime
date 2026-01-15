@@ -23,7 +23,7 @@ class PasswordHasher:
 
 
 class UserRepository:
-    """One job: persistence (DB details live here)."""
+    """One job: persistence."""
     def __init__(self, db):
         self.db = db
 
@@ -33,7 +33,7 @@ class UserRepository:
 
 
 class WelcomeNotifier:
-    """One job: notifications (email provider/templates live here)."""
+    """One job: notifications."""
     def __init__(self, email_client):
         self.email_client = email_client
 
