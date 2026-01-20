@@ -1,4 +1,4 @@
-// Lean interfaces: each interface has a specific purpose
+// Lean interfaces: small, specific interfaces for each capability
 interface IMusicPlayer {
     void playMusic();
 }

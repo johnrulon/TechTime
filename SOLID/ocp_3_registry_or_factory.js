@@ -12,6 +12,8 @@ svc.send("Build succeeded", "email");
 svc.send("Build succeeded", "sms");
 svc.send("Build succeeded", "push");
 
-// To add a new channel, we just register it without modifying NotificationService:
+// To add a new channel, we just register it without modifying NotificationService
 registry.register("slack", () => new SlackChannel());
-svc.send("Build succeeded", "slack"); // Works without modifying NotificationService
+
+// We can now use the new channel without modifying NotificationService
+svc.send("Build succeeded", "slack"); 

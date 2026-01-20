@@ -1,6 +1,7 @@
 
 using System;
 
+// Separate interfaces for work and eat behaviors
 public interface IWorkable
 {
     void Work();

@@ -1,6 +1,6 @@
-using Microsoft.EntityFrameworkCore;
+using Moq;
 using Xunit;
-using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 public class OrderServiceTests
@@ -8,18 +8,22 @@ public class OrderServiceTests
     [Fact]
     public async Task CanShip_WhenOrderExists_ReturnsTrue()
     {
-        // In-memory EF Core database for a true unit-ish test
-        var options = new DbContextOptionsBuilder<AppDbContext>()
-            .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
-            .Options;
+        // Arrange: set up mock repository
+        var mockedRepo = new Mock<IOrderRepository>();
 
-        await using var db = new AppDbContext(options);
-        db.Orders.Add(new Order { Id = "A123", Status = "Ready" });
-        await db.SaveChangesAsync();
+        mockedRepo.Setup(r => r.ExistsAsync("A123", It.IsAny<CancellationToken>()))
+            .ReturnsAsync(true);
 
-        IOrderRepository repo = new EfOrderRepository(db);
-        var service = new OrderService(repo);
+        var service = new OrderService(mockedRepo.Object);
 
-        Assert.True(await service.CanShipAsync("A123"));
+        // Act
+        var result = await service.CanShipAsync("A123");
+
+        // Assert
+        Assert.True(result);
+
+        // Verify actions
+        mockedRepo.Verify(r => r.ExistsAsync("A123", It.IsAny<CancellationToken>()), Times.Once);
+        mockedRepo.VerifyNoOtherCalls();
     }
 }

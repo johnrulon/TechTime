@@ -1,3 +1,4 @@
+
 class NotificationService {
   send(message, channel) {
     if (channel === "email") {

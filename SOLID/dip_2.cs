@@ -9,11 +9,11 @@ public interface IOrderRepository
 }
 
 // EF Core implementation of the repository
-public sealed class EfOrderRepository : IOrderRepository
+public sealed class OrderRepository : IOrderRepository
 {
     private readonly AppDbContext _db;
 
-    public EfOrderRepository(AppDbContext db)
+    public OrderRepository(AppDbContext db)
     {
         _db = db;
     }

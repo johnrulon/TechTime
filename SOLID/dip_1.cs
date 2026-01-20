@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 
-public sealed class OrderServiceBad
+public sealed class OrderService
 {
     private readonly AppDbContext _db;
 

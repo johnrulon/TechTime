@@ -43,3 +43,36 @@ class WelcomeNotifier:
             subject="Welcome!",
             body="Thanks for signing up."
         )
+
+
+class UserRegistration:
+    """
+    Composition:
+    Composes multiple single-responsibility classes to perform the full registration workflow.
+    """
+    def __init__(
+        self,
+        validator: UserValidator,
+        hasher: PasswordHasher,
+        repo: UserRepository,
+        notifier: WelcomeNotifier
+    ):
+        self.validator = validator
+        self.hasher = hasher
+        self.repo = repo
+        self.notifier = notifier
+
+    def register_user(self, email: str, password: str) -> User:
+        # 1) validate
+        self.validator.validate(email, password)
+
+        # 2) hash password
+        password_hash = self.hasher.hash(password)
+
+        # 3) persist
+        user = self.repo.create(email=email, password_hash=password_hash)
+
+        # 4) notify
+        self.notifier.send_welcome(user.email)
+
+        return user

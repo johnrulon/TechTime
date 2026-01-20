@@ -25,7 +25,7 @@ class PushChannel extends NotificationChannel {
   }
 }
 
-// Service depends on the abstraction, not concrete types
+// Service is open for extension, closed for modification
 class NotificationService {
   send(message, channel) {
     return channel.send(message);
